@@ -1,0 +1,49 @@
+# 忽略以下文件和文件夹
+
+# 编辑器和IDE生成的临时/配置文件
+.vscode/
+.idea/
+*.sublime*
+*.swp
+
+# Node.js和NPM生成的临时文件和模块
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# 编译输出和打包文件
+dist/
+build/
+out/
+
+# 运行时生成的文件
+*.log
+*.pid
+
+# 隐藏文件和临时文件
+.DS_Store
+Thumbs.db
+*.tmp
+
+# 配置和敏感信息文件
+.env
+.env.local
+.env.*.local
+.env.*.local.example
+.env.*.test
+.env.*.test.example
+.env.*.production
+.env.*.production.example
+.env.build
+.env.development
+.env.production
+.env.test
+
+# 依赖安装/构建脚本和缓存
+package-lock.json
+yarn.lock
+yarn-error.log
+
+# 特定编辑器或IDE的配置文件（根据需要添加）
+# .vscode/settings.json
+# .idea/
