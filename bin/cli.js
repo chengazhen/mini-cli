@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const program = require('commander')
-const { version} = require('../package.json')
+const { version } = require('../package.json')
 const inquirer = require('inquirer');
 const templates = require('./template.js')
 const path = require("path")
@@ -33,6 +33,7 @@ program
       choices: templates // 模版列表
     })
 
+
     const dest = path.join(process.cwd(), name)
     // 判断文件夹是否存在，存在就交互询问用户是否覆盖
     if (fs.existsSync(dest)) {
@@ -47,22 +48,13 @@ program
 
     const loading = ora('正在下载模版...')
     loading.start()
-    // 开始下载模版
-    downloadGitRepo(template, dest, (err) => {
-      if (err) {
-        loading.fail('创建模版失败：' + err.message) // 失败loading
-      } else {
-        loading.succeed('创建模版成功!') // 成功loading
-        if (fs.existsSync(dest)) {
-          info(`${yellow('$')}  ${cyanBright(`cd ${name}`)}  进入项目目录`)
-          info(`${yellow('$')}  ${cyanBright('npm i')}  安装依赖`)
-          info(`${yellow('$')}  ${cyanBright('npm run dev')}   运行项目`)
-        }
-        process.exit(1)
-      }
+    download(template, dest, { clone: template.includes('hexfuture') }).then(() => {
+      handleSuccess(name)
+    }).catch(err => {
+      handleFail(err)
     })
-
   });
+
 
 
 // 定义当前版本
@@ -74,3 +66,28 @@ program.on('--help', () => { }) // 添加--help
 
 // 解析用户执行命令传入参数
 program.parse(process.argv)
+
+
+function download(repo, dest, opt) {
+  return new Promise((resolve, reject) => {
+    downloadGitRepo(repo, dest, opt, (err) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+function handleSuccess(name) {
+  info(`${yellow('$')}  ${cyanBright(`cd ${name}`)}  进入项目目录`)
+  info(`${yellow('$')}  ${cyanBright('npm i')}  安装依赖`)
+  info(`${yellow('$')}  ${cyanBright('npm run dev')}   运行项目`)
+  process.exit(1)
+}
+
+function handleFail(err) {
+  console.log(err)
+  process.exit(1)
+}
