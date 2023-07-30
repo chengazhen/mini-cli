@@ -3,10 +3,8 @@
 ## 安装
 
 ### 全局安装
-$ npm install -g azhen-cli
-# or yarn
-$ yarn global add azhen-cli
+`$ npm install -g azhen-cli`
 
-### 借助npx
-创建模版
-azhen-cli create
+下载模板
+
+`$ azhen-cli create`
