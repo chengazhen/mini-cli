@@ -8,3 +8,5 @@
 下载模板
 
 `$ azhen-cli create`
+
+[参考文档](https://juejin.cn/post/7236021829000446011)
